@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Login Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4 text-primary">Welcome</h1>
+    <p class="text-primary opacity-50 fw-bold">please choose the Account type to Register </p>
+</div>
+<br />
+
+
+
+<div class="d-flex justify-content-around ">
+    <div class="card" style="width: 18rem;">
+        <img src="~/teacher-concept-illustration_114360-2166.jpg" />
+        <div class="card-body">
+            <h5 class="card-title">Register as a Teacher</h5>
+            <p class="card-text">Some steps to register your student account</p>
+            <a asp-controller="Teachers" asp-action="Create" class="btn btn-primary">Register</a>
+        </div>
+    </div>
+    <div class="card" style="width: 18rem;">
+        <img src="~/istockphoto-1171911961-170667a.jpg" />
+
+        <div class="card-body">
+            <h5 class="card-title">Register as a Student</h5>
+            <p class="card-text">Some steps to register your student account</p>
+            <a asp-controller="Students" asp-action="Create" class="btn btn-primary">Register</a>
+        </div>
+    </div>
+</div>

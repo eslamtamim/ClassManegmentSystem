@@ -1,0 +1,108 @@
+﻿@model ClassManegmentSystem.Models.Student
+
+@{
+    ViewData["Title"] = "Info";
+}
+
+<h1>Info</h1>
+
+<form>
+    <h4>Student</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.StudentId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.StudentId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.StudentNumber)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.StudentNumber)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.StudentName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.StudentName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.StudentGrade)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.StudentGrade)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.StudentNationalID)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.StudentNationalID)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.StudentPhoneNumber)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.StudentPhoneNumber)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.StudentParentPhoneNumber)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.StudentParentPhoneNumber)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.BithDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.BithDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CreationDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CreationDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.city.CityId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.city.CityId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.city.CityName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.city.CityName)
+        </dd>
+        
+    </dl>
+</form>
+
+<form method="post" asp-action="Create" asp-controller="Home">
+    <div>
+        <dt class="col-sm-2 mt-2">
+            @Html.DisplayName("Add To Class")
+        </dt>
+        <dd class="col-sm-3">
+            @Html.TextBox("Teacherid", null, new { @class = "form-control" , @placeholder = "Teacher's id to attend to his class..."})
+        </dd>
+    </div>
+    <div class="d-none">
+        <dt class="col-sm-2 mt-2 ">
+            @Html.DisplayName("Add To Class")
+        </dt>
+        <dd class="col-sm-3">
+            <input name="Studentid" value="@Model.StudentId" />
+            @Html.TextBox("Studentid", null, new { @class = "form-control" , @placeholder = "Teacher's id to attend to his class..."})
+        </dd>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Add" class="btn btn-primary" />
+    </div>
+</form>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.StudentId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

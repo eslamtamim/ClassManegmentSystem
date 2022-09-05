@@ -1,0 +1,86 @@
+﻿@model IEnumerable<ClassManegmentSystem.Models.Teacher>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TeacherName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TeacherNationalID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TeacherPhoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Age)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Subject)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TeacherName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TeacherNationalID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TeacherPhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Age)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Subject)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.TeacherId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.TeacherId">Details</a> |
+                    <a href="javascript:;" class="js-delete text-danger" data-id="@item.TeacherId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+
+            $('.js-delete').on('click', function () {
+                var btn = $(this);
+                bootbox.confirm(
+                    "Are you sure you want to delete this permanently?",
+
+                    function (result) {
+                        if (result) {
+                            $.ajax({
+                                url: 'Teachers/delete/' + btn.data('id'),
+                                success: function () {
+                                    btn.parents("tr").fadeOut();
+                                },
+                                error: function () {
+                                    console.log("error")
+                                }
+                            })
+                        }
+                    })
+            })
+        });
+    </script>
+ }
