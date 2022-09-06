@@ -29,11 +29,26 @@ namespace ClassManegmentSystem.Models
                 s =>
                 {
                     s.Property(e => e.StudentNumber)
-                    .HasComputedColumnSql("[StudentGrade]+ '-' + [StudentId]+ '-' + [CityId]");
+                    .HasComputedColumnSql("[StudentGrade]+ '-' + CAST([StudentId] AS varchar) + '-' + CAST([CityId] AS varchar)");
                     s.Property(e => e.CreationDate)
                     .HasDefaultValueSql("GETDATE()");
                     s.HasOne(e => e.city).WithMany(c => c.students);
-                    //s.Property(e => e.StudentID).UseIdentityColumn(101, 1);
+                    s.Property(e => e.StudentId).UseIdentityColumn(101, 1);
+
+                }
+                ); model.Entity<Teacher>(
+                s =>
+                {
+                    
+                    s.Property(e => e.TeacherId).UseIdentityColumn(11, 1);
+
+                }
+                );
+            model.Entity<City>(
+                s =>
+                {
+                    
+                    s.Property(e => e.CityId).UseIdentityColumn(11, 1);
 
                 }
                 );

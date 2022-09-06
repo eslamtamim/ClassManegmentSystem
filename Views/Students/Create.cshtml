@@ -14,11 +14,11 @@
         <form asp-action="Create" asp-controller="Students" method="post">
             
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="StudentId" class="control-label"></label>
                 <input asp-for="StudentId" class="form-control" />
                 <span asp-validation-for="StudentId" class="text-danger"></span>
-            </div>
+            </div>*@
 
             <div class="form-group">
                 <label asp-for="StudentName" class="control-label"></label>

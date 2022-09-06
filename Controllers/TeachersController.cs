@@ -27,7 +27,7 @@ namespace ClassManegmentSystem.Controllers
         }
 
         // GET: Teachers/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(int id)
         {
             if (id == null || _context.Teachers == null)
             {
@@ -67,7 +67,7 @@ namespace ClassManegmentSystem.Controllers
         }
 
         // GET: Teachers/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(int id)
         {
             if (id == null || _context.Teachers == null)
             {
@@ -87,7 +87,7 @@ namespace ClassManegmentSystem.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("TeacherId,TeacherName,TeacherNationalID,TeacherPhoneNumber,Age,Subject")] Teacher teacher)
+        public async Task<IActionResult> Edit(int id, [Bind("TeacherId,TeacherName,TeacherNationalID,TeacherPhoneNumber,Age,Subject")] Teacher teacher)
         {
             if (id != teacher.TeacherId)
             {
@@ -103,14 +103,14 @@ namespace ClassManegmentSystem.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TeacherExists(teacher.TeacherId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                //    if (!TeacherExists(Convert.ToString(teacher.TeacherId)))
+                //    {
+                //        return NotFound();
+                //    }
+                //    else
+                //    {
+                //        throw;
+                //    }
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -118,7 +118,7 @@ namespace ClassManegmentSystem.Controllers
         }
 
         // GET: Teachers/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(int id)
         {
             if (id == null || _context.Teachers == null)
             {
@@ -155,7 +155,7 @@ namespace ClassManegmentSystem.Controllers
         //    return RedirectToAction(nameof(Index));
         //}
 
-        private bool TeacherExists(string id)
+        private bool TeacherExists(int id)
         {
           return (_context.Teachers?.Any(e => e.TeacherId == id)).GetValueOrDefault();
         }

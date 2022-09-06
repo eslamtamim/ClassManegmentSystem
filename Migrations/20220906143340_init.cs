@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ClassManegmentSystem.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,7 +13,8 @@ namespace ClassManegmentSystem.Migrations
                 name: "cities",
                 columns: table => new
                 {
-                    CityId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CityId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     CityName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -44,7 +45,7 @@ namespace ClassManegmentSystem.Migrations
                 {
                     StudentId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "101, 1"),
-                    StudentNumber = table.Column<string>(type: "nvarchar(max)", nullable: true, computedColumnSql: "[StudentGrade]+ '-' + [StudentId]+ '-' + [CityId]"),
+                    StudentNumber = table.Column<string>(type: "nvarchar(max)", nullable: true, computedColumnSql: "[StudentGrade]+ '-' + CAST([StudentId] AS varchar) + '-' + CAST([CityId] AS varchar)"),
                     StudentName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StudentGrade = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StudentNationalID = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -52,7 +53,7 @@ namespace ClassManegmentSystem.Migrations
                     StudentParentPhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BithDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "GETDATE()"),
-                    CityId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    CityId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

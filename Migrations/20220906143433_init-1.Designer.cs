@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ClassManegmentSystem.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220905114106_somedbshit")]
-    partial class somedbshit
+    [Migration("20220906143433_init-1")]
+    partial class init1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,8 +26,11 @@ namespace ClassManegmentSystem.Migrations
 
             modelBuilder.Entity("ClassManegmentSystem.Models.City", b =>
                 {
-                    b.Property<string>("CityId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("CityId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CityId"), 11L, 1);
 
                     b.Property<string>("CityName")
                         .IsRequired()
@@ -40,11 +43,11 @@ namespace ClassManegmentSystem.Migrations
 
             modelBuilder.Entity("ClassManegmentSystem.Models.Class", b =>
                 {
-                    b.Property<string>("StudentId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("TeacherId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("TeacherId")
+                        .HasColumnType("int");
 
                     b.HasKey("StudentId", "TeacherId");
 
@@ -55,17 +58,19 @@ namespace ClassManegmentSystem.Migrations
 
             modelBuilder.Entity("ClassManegmentSystem.Models.Student", b =>
                 {
-                    b.Property<string>("StudentId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("StudentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StudentId"), 101L, 1);
 
                     b.Property<DateTime>("BithDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("CityId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("CityId")
+                        .HasColumnType("int");
 
-                    b.Property<DateTime>("CreationDate")
+                    b.Property<DateTime?>("CreationDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETDATE()");
@@ -85,7 +90,7 @@ namespace ClassManegmentSystem.Migrations
                     b.Property<string>("StudentNumber")
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("nvarchar(max)")
-                        .HasComputedColumnSql("[StudentGrade]+ '-' + [StudentId]+ '-' + [CityId]");
+                        .HasComputedColumnSql("[StudentGrade]+ '-' + CAST([StudentId] AS varchar) + '-' + CAST([CityId] AS varchar)");
 
                     b.Property<string>("StudentParentPhoneNumber")
                         .IsRequired()
@@ -104,8 +109,11 @@ namespace ClassManegmentSystem.Migrations
 
             modelBuilder.Entity("ClassManegmentSystem.Models.Teacher", b =>
                 {
-                    b.Property<string>("TeacherId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("TeacherId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TeacherId"), 11L, 1);
 
                     b.Property<string>("Age")
                         .IsRequired()

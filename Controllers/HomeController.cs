@@ -34,13 +34,20 @@ namespace ClassManegmentSystem.Controllers
         {
             Class Class = new()
             {
-                StudentId = Request.Form["Studentid"],
-                TeacherId = Request.Form["Teacherid"],
+                StudentId = int.Parse(Request.Form["Studentid"]),
+                TeacherId = int.Parse(Request.Form["Teacherid"]),
             };
             if(ModelState.IsValid)
                 _Context.Add(Class);
+            try
+            {
                 _Context.SaveChanges();
-
+            }
+            catch
+            {
+                _Context.Remove(Class);
+             
+            }
             return RedirectToAction("Index");
         }
         public IActionResult Table()

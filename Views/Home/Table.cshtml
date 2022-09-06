@@ -1,44 +1,52 @@
 ﻿@model IEnumerable<ClassManegmentSystem.Models.Class>
 @{
     ViewData["Title"] = "Home Page";
-
+    var TeacherData = Model.Select(e => new { e.teacher.TeacherName, e.teacher.TeacherId , e.teacher.Subject }).Distinct().ToList();
+    int count = Model.Select(e=> e.student.StudentName).Count();
 }
 
 <div class="text-center">
-    <h1 class="display-4 text-primary">Welcome </h1>
-    <p class="text-primary opacity-50 fw-bold">Here is you place to manege and keep track of you class</p>
 </div>
 <br />
+<br />
+@foreach (var item in Model)
+{
+    <div class="d-flex justify-content-between align-content-center text-primary" >
 
+    <h3>Mr/@item.teacher.TeacherName</h3>
+    <h3>Subject: @item.teacher.Subject</h3>
+        <h3> Count of Students: @count</h3>
 
+    </div>
+    
+}   
+
+<br />
 @if (Model.Any())
 {
     <div>
         <table class="table">
             <thead>
                 <tr>
-                    <th>@Html.DisplayNameFor(model => model.teacher.TeacherName)</th>
-                    <th>@Html.DisplayNameFor(model => model.teacher.Subject)</th>
-                    <th>@Html.DisplayNameFor(model => model.student.StudentNumber)</th>
                     <th>@Html.DisplayNameFor(model => model.student.StudentName)</th>
                     <th>@Html.DisplayNameFor(model => model.student.city.CityName)</th>
-                    <th>@Html.DisplayNameFor(model => model.student.StudentGrade)</th>
+                    <th>@Html.DisplayNameFor(model => model.student.StudentNumber)</th>
                     <th>@Html.DisplayNameFor(model => model.student.StudentPhoneNumber)</th>
                     <th>@Html.DisplayNameFor(model => model.student.StudentParentPhoneNumber)</th>
+                    <th>@Html.DisplayNameFor(model => model.student.StudentGrade)</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@Html.DisplayFor(model => item.teacher.TeacherName)</td>
-                        <td>@Html.DisplayFor(model => item.teacher.Subject)</td>
-                        <td>@Html.DisplayFor(model => item.student.StudentNumber)</td>
+                      
                         <td>@Html.DisplayFor(model => item.student.StudentName)</td>
                         <td>@Html.DisplayFor(model => item.student.city.CityName)</td>
-                        <td>@Html.DisplayFor(model => item.student.StudentGrade)</td>
+                        <td>@Html.DisplayFor(model => item.student.StudentNumber)</td>
                         <td>@Html.DisplayFor(model => item.student.StudentPhoneNumber)</td>
                         <td>@Html.DisplayFor(model => item.student.StudentParentPhoneNumber)</td>
+                        <td>@Html.DisplayFor(model => item.student.StudentGrade)</td>
                     </tr>
                 }
             </tbody>

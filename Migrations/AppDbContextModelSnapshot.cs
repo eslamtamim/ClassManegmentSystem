@@ -24,8 +24,11 @@ namespace ClassManegmentSystem.Migrations
 
             modelBuilder.Entity("ClassManegmentSystem.Models.City", b =>
                 {
-                    b.Property<string>("CityId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("CityId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CityId"), 11L, 1);
 
                     b.Property<string>("CityName")
                         .IsRequired()
@@ -33,37 +36,39 @@ namespace ClassManegmentSystem.Migrations
 
                     b.HasKey("CityId");
 
-                    b.ToTable("cities", (string)null);
+                    b.ToTable("cities");
                 });
 
             modelBuilder.Entity("ClassManegmentSystem.Models.Class", b =>
                 {
-                    b.Property<string>("StudentId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("TeacherId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("TeacherId")
+                        .HasColumnType("int");
 
                     b.HasKey("StudentId", "TeacherId");
 
                     b.HasIndex("TeacherId");
 
-                    b.ToTable("classes", (string)null);
+                    b.ToTable("classes");
                 });
 
             modelBuilder.Entity("ClassManegmentSystem.Models.Student", b =>
                 {
-                    b.Property<string>("StudentId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("StudentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StudentId"), 101L, 1);
 
                     b.Property<DateTime>("BithDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("CityId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("CityId")
+                        .HasColumnType("int");
 
-                    b.Property<DateTime>("CreationDate")
+                    b.Property<DateTime?>("CreationDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETDATE()");
@@ -83,7 +88,7 @@ namespace ClassManegmentSystem.Migrations
                     b.Property<string>("StudentNumber")
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("nvarchar(max)")
-                        .HasComputedColumnSql("[StudentGrade]+ '-' + [StudentId]+ '-' + [CityId]");
+                        .HasComputedColumnSql("[StudentGrade]+ '-' + CAST([StudentId] AS varchar) + '-' + CAST([CityId] AS varchar)");
 
                     b.Property<string>("StudentParentPhoneNumber")
                         .IsRequired()
@@ -97,13 +102,16 @@ namespace ClassManegmentSystem.Migrations
 
                     b.HasIndex("CityId");
 
-                    b.ToTable("Students", (string)null);
+                    b.ToTable("Students");
                 });
 
             modelBuilder.Entity("ClassManegmentSystem.Models.Teacher", b =>
                 {
-                    b.Property<string>("TeacherId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("TeacherId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TeacherId"), 11L, 1);
 
                     b.Property<string>("Age")
                         .IsRequired()
@@ -127,7 +135,7 @@ namespace ClassManegmentSystem.Migrations
 
                     b.HasKey("TeacherId");
 
-                    b.ToTable("Teachers", (string)null);
+                    b.ToTable("Teachers");
                 });
 
             modelBuilder.Entity("ClassManegmentSystem.Models.Class", b =>

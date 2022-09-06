@@ -84,10 +84,10 @@
        
 
 		<dd class="col-sm-10">
-			@foreach (var item in ViewBag.TeacherIds)
+            @foreach (var item in ViewBag.TeacherIds)
 			{
-                <span>|@item|</span> 
-			}
+                <p> Name: <span class="text-primary">@item.TeacherName</span> - ID: <span class="text-primary">@item.TeacherId</span> Subject: <span class="text-primary">@item.Subject</span> </p>
+            }
 		</dd>
         <dd class="col-sm-10  @(ViewBag.boo ? "d-none" : " ")">
             <div class="alert alert-warning d-flex align-items-lg-center col-3 mt-2" role="alert">
@@ -109,7 +109,7 @@
             @Html.DisplayName("Add To Class")
         </dt>
         <dd class="col-sm-3">
-            @Html.TextBox("Teacherid", null, new { @class = "form-control" , @placeholder = "Teacher's id to attend to his class..."})
+            @Html.DropDownList("Teacherid", new SelectList(ViewBag.AllTeacherIds, "TeacherId", "TeacherName"),"", new { @class = "form-control" , @placeholder = "Teacher's id to attend to his class..."})
         </dd>
     </div>
     <div class="d-none">

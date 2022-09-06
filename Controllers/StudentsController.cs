@@ -43,7 +43,7 @@ namespace ClassManegmentSystem.Controllers
             return View(student);
         }
 
-        public IActionResult Edit(string id)
+        public IActionResult Edit(int id)
         {
      
             var student = students().FirstOrDefault(s => s.StudentId == id);
@@ -67,18 +67,19 @@ namespace ClassManegmentSystem.Controllers
         }
 
         [HttpGet]
-        public IActionResult Info(string id)
+        public IActionResult Info(int id)
         {
             var student = students().FirstOrDefault(s => s.StudentId == id);
-            var listofids = _Context.classes.Where(e=>e.StudentId == id).Select(e=>e.TeacherId).ToList();
-            ViewBag.TeacherIds = listofids;
+            var listofids = _Context.classes.Where(e => e.StudentId == id).Select(e => e.teacher);
+            ViewBag.TeacherIds = listofids.ToList();
+            ViewBag.AllTeacherIds = _Context.Teachers.ToList();
             ViewBag.boo = listofids.Any();
             ViewBag.Cities = _Context.cities.ToList();
             return View(student);
         }
 
         [HttpGet]
-        public IActionResult Delete(string id)
+        public IActionResult Delete(int id)
         {
             var student = students().FirstOrDefault(s => s.StudentId == id);
             if (ModelState.IsValid)

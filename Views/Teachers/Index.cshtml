@@ -9,54 +9,73 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.TeacherName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TeacherNationalID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TeacherPhoneNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Age)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Subject)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TeacherName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TeacherNationalID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TeacherPhoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Age)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Subject)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.TeacherId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.TeacherId">Details</a> |
-                    <a href="javascript:;" class="js-delete text-danger" data-id="@item.TeacherId">Delete</a>
-            </td>
-        </tr>
+
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.TeacherName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TeacherNationalID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TeacherPhoneNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Age)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Subject)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TeacherName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TeacherNationalID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TeacherPhoneNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Age)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Subject)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.TeacherId">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.TeacherId">Details</a> |
+                        <a href="javascript:;" class="js-delete text-danger" data-id="@item.TeacherId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
-    </tbody>
-</table>
+@if (!Model.Any())
+{
+
+    <div class="alert alert-warning d-flex align-items-lg-center col-5" role="alert">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle me-2" viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+            <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z" />
+        </svg>
+        <div>
+            No Teachers Found, create some
+        </div>
+    </div>
+
+}
 
 @section Scripts{
     <script>

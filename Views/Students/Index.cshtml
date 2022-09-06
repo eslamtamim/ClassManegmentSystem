@@ -12,7 +12,7 @@
 @if(Model.Any()){
 
 
-<table class="table">
+<table class="table table-responsive">
     <thead>
         <tr>
             <th>
@@ -40,7 +40,7 @@
                 @Html.DisplayNameFor(model => model.CreationDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.city)
+                @Html.DisplayNameFor(model => model.city.CityName)
             </th>
             <th></th>
         </tr>
