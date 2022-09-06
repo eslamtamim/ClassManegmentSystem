@@ -70,6 +70,9 @@ namespace ClassManegmentSystem.Controllers
         public IActionResult Info(string id)
         {
             var student = students().FirstOrDefault(s => s.StudentId == id);
+            var listofids = _Context.classes.Where(e=>e.StudentId == id).Select(e=>e.TeacherId).ToList();
+            ViewBag.TeacherIds = listofids;
+            ViewBag.boo = listofids.Any();
             ViewBag.Cities = _Context.cities.ToList();
             return View(student);
         }

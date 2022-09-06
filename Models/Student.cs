@@ -15,7 +15,7 @@ namespace ClassManegmentSystem.Models
         [Display(Name = "Grade year")]
 
         public string StudentGrade { get; set; }
-        [Display(Name = "Natiotal ID")]
+        [Display(Name = "National ID")]
 
         public string StudentNationalID { get; set; }
         [Display(Name = "Phone Number")]

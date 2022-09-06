@@ -41,8 +41,20 @@ namespace ClassManegmentSystem.Controllers
                 _Context.Add(Class);
                 _Context.SaveChanges();
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index");
         }
+        public IActionResult Table()
+        {
+            ViewBag.Teacher = Request.Form["Teacher"];
+            ViewBag.Grade = Request.Form["Grade"];
+            ViewBag.City = Request.Form["City"];
+
+            var data = Class().Where(e => e.teacher.TeacherName == Request.Form["Teacher"] &&
+            e.student.StudentGrade == Request.Form["Grade"] && e.student.city.CityName == Request.Form["City"]).ToList();
+            return View(data);
+        }
+
+
 
 
 
