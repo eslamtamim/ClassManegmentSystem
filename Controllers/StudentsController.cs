@@ -19,20 +19,21 @@ namespace ClassManegmentSystem.Controllers
 
         public IActionResult Index()
         {
-
             return View(students());
         }
+
         [HttpGet]
         public IActionResult Create()
         {
-           ViewBag.Cities = _Context.cities.ToList();
+            //sending the cities so make a dropdown out of it
+            ViewBag.Cities = _Context.cities.ToList();
             return View();
         }
 
         [HttpPost]
         public IActionResult Create(Student student)
         {
-
+            //makes sure every thing is ok
             if (ModelState.IsValid)
             {
                 _Context.Students.Add(student);

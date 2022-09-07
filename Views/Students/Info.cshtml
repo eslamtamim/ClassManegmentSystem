@@ -1,7 +1,7 @@
 ﻿@model ClassManegmentSystem.Models.Student
 
 @{
-    ViewData["Title"] = "Info";
+    ViewData["Title"] = @Model.StudentName.Split(" ")[0] + "'s Account";
 }
 
 
@@ -129,3 +129,9 @@
     <a asp-action="Edit" asp-route-id="@Model?.StudentId">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
