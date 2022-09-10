@@ -47,16 +47,22 @@ namespace ClassManegmentSystem.Models
             model.Entity<City>(
                 s =>
                 {
-                    
                     s.Property(e => e.CityId).UseIdentityColumn(11, 1);
-
                 }
                 );
+            //model.Entity<Class>(
+            //   s =>
+            //   {
+            //       s.Property(e => e.ClassId)
+            //        .HasComputedColumnSql("[student].[StudentGrade]+ '-' + [teacher].CAST([TeacherId] AS varchar) + '-' + CAST([CityId] AS varchar)");
 
+            //   }
+            //   );
         }
         public DbSet<Student> Students { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<City> cities { get; set; }
+        public DbSet<Attendees> Attendees { get; set; }
         public DbSet<Class> classes { get; set; }
 
     }

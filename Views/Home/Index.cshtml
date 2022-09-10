@@ -1,69 +1,62 @@
-﻿@model IEnumerable<ClassManegmentSystem.Models.Class>
+﻿@model Tuple<IEnumerable<ClassManegmentSystem.Models.Class>,List<ClassManegmentSystem.Models.Class>>
 @{
     ViewData["Title"] = "Home Page";
 
-    var Teacher = Model.Select(e =>e.teacher.TeacherName).Distinct().ToList();
-    var Grade = Model.Select(e => e.student.StudentGrade).Distinct().ToList();
-    var City = Model.Select(e => e.student.city.CityName).Distinct().ToList();
+    var Teacher = Model.Item1.Select(e =>e.teacher.TeacherName).Distinct().ToList();
+    var Grade = Model.Item1.Select(e => e.student.StudentGrade).Distinct().ToList();
+    var City = Model.Item1.Select(e => e.student.city.CityName).Distinct().ToList();
+    var Groups = ViewBag.Classes;
 
-    
 }
 
 <div class="text-center">
     <h1 class="display-4 text-primary">Welcome </h1>
-    <p class="text-primary opacity-50 fw-bold">Here is you place to manege and keep track of you class</p>
+    <p class="text-primary opacity-50 fw-bold">Choose the Teacher you want to see his Classes</p>
 </div>
 <br/>
 
-<form asp-action="Table" asp-controller="Home" method="post">
+
+
+
+<form asp-action="Index" asp-controller="Home" method="post">
 <div class=" d-flex flex-row justify-content-around ">
         <div class="col-3"> @Html.Label("TeacherName") @Html.DropDownList("TeacherName", new SelectList(Teacher) ,"",new { @class = "form-control"})</div>
-    <div class="col-2"> @Html.Label("Grade") @Html.DropDownList("Grade", new SelectList(Grade) ,"",new { @class = "form-control" })</div>
-        <div class="col-3"> @Html.Label("CityName") @Html.DropDownList("CityName", new SelectList(City) ,"",new { @class = "form-control"  })</div>
+
+      @*  <div class="col-2"> @Html.Label("Grade") @Html.DropDownList("Grade", new SelectList(Grade) ,"",new { @class = "form-control" })</div>
+        <div class="col-3"> @Html.Label("CityName") @Html.DropDownList("CityName", new SelectList(City) ,"",new { @class = "form-control"  })</div>*@
 </div>
     <div class="d-flex align-items-center justify-content-center mt-4">
-        @*<a asp-action="Table" class="btn  btn-outline-primary" asp-all-route-TeacherName="TeacherName" asp-all-route-CityName="CityName" asp-all-route-Grade="Grade">Filter</a>*@
+        @*<a asp-action="Table" class="btn btn-outline-primary">Filter</a>*@
 
-        <input type="submit"value="Filter" class="btn  btn-outline-primary" />
+        <input type="submit"value="Filter" class="btn btn-outline-primary" />
 </div>
 </form>
-
-
-@*@if (Model.Any())
+<br/>
+@if (Model.Item2.Any())
 {
-    <div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>@Html.DisplayNameFor(model => model.teacher.TeacherName)</th>
-                    <th>@Html.DisplayNameFor(model => model.teacher.Subject)</th>
-                    <th>@Html.DisplayNameFor(model => model.student.StudentNumber)</th>
-                    <th>@Html.DisplayNameFor(model => model.student.StudentName)</th>
-                    <th>@Html.DisplayNameFor(model => model.student.city.CityName)</th>
-                    <th>@Html.DisplayNameFor(model => model.student.StudentGrade)</th>
-                    <th>@Html.DisplayNameFor(model => model.student.StudentPhoneNumber)</th>
-                    <th>@Html.DisplayNameFor(model => model.student.StudentParentPhoneNumber)</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@Html.DisplayFor(model => item.teacher.TeacherName)</td>
-                        <td>@Html.DisplayFor(model => item.teacher.Subject)</td>
-                        <td>@Html.DisplayFor(model => item.student.StudentNumber)</td>
-                        <td>@Html.DisplayFor(model => item.student.StudentName)</td>
-                        <td>@Html.DisplayFor(model => item.student.city.CityName)</td>
-                        <td>@Html.DisplayFor(model => item.student.StudentGrade)</td>
-                        <td>@Html.DisplayFor(model => item.student.StudentPhoneNumber)</td>
-                        <td>@Html.DisplayFor(model => item.student.StudentParentPhoneNumber)</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+    @foreach (var item in Model.Item2)
+    {
+        <div class="card d-flex justify-content-between align-content-around" style="width: 18rem;">
+                <div class="card-body ">
+                    <h5 class="card-title">@item.student.city.CityName</h5>
+                    <p class="card-text">@item.ClassName</p>
+                    <a asp-controller="SchoolClass" asp-action="Table"  asp-route-Id ="@item.ClassNumber"  class="card-link">Table Of Students</a>
+                </div>
+            </div>
+    }
+}else{
+    <div class="alert alert-warning d-flex align-items-lg-center mt-5 col-12" role="alert">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle me-2" viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+            <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z" />
+        </svg>
+        <div>
+           Select the teacher to view to classes he has
+        </div>
     </div>
-}*@
-@*@if(Model.Any()){
+}
+
+@*if(!Model.Any()){
     <div class="alert alert-warning d-flex align-items-lg-center mt-5 col-12" role="alert">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle me-2" viewBox="0 0 16 16">
             <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
@@ -74,29 +67,5 @@
         </div>
     </div>
 }
-    *@
+}*@
 
-
-
-
-@*
-
-<div class="d-flex justify-content-around ">
-<div class="card" style="width: 18rem;">
-<img src="~/teacher-concept-illustration_114360-2166.jpg" />
-  <div class="card-body">
-    <h5 class="card-title">Teachers Portal</h5>
-    <p class="card-text">As a teacher you go here.</p>
-            <a href="#" class="btn btn-primary">go to Teachers</a>
-  </div>
-</div>
-	<div class="card" style="width: 18rem;">
-		<img src="~/istockphoto-1171911961-170667a.jpg" />
-   
-    <div class="card-body">
-        <h5 class="card-title">Students Portal</h5>
-            <p class="card-text">As a student you go here.</p>
-            <a asp-action="" class="btn btn-primary">go to Students</a>
-    </div>
-</div>
-</div>*@

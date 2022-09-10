@@ -1,13 +1,14 @@
-﻿@model IEnumerable<ClassManegmentSystem.Models.Student>
+﻿@model Tuple<List<ClassManegmentSystem.Models.Student>,List<ClassManegmentSystem.Models.Attendees>>
 @{
 
     ViewData["Title"] = "Home Page";
-    //var TeacherData = Model.Select(e => new { e.teacher.TeacherName, e.teacher.TeacherId , e.teacher.Subject }).Distinct().ToList();
-        int count = Model.Select(e => e.StudentName).Count();
-        string city = Model.FirstOrDefault(e => true).city.CityName;
-        string grade = Model.FirstOrDefault(e => true).StudentGrade;
-    
+    //var TeacherData = Model.Item1Select(e => new { e.teacher.TeacherName, e.teacher.TeacherId , e.teacher.Subject }).Distinct().ToList();
 
+    int count = Model.Item1.Select(e => e.StudentName).Count();
+    var Dates = Model.Item2.OrderBy(e => e.DateOfAttendeens).Select(e => e.DateOfAttendeens).Distinct().ToList();
+    string? city = Model.Item1.FirstOrDefault(e => true).city.CityName;
+    string? grade = Model.Item1.FirstOrDefault(e => true).StudentGrade;
+    
 }
 
 <div class="text-center">
@@ -30,7 +31,7 @@
 <div class="d-flex justify-content-between align-content-center text-primary" >
 
     <h3>Mr/@ViewBag.Teacher.TeacherName</h3>
-    <h3>Subject: @ViewBag.Teacher.Subject - ID = @ViewBag.Teacher.TeacherId</h3>
+    <h3>Subject: '@ViewBag.Teacher.Subject' - ID = '@ViewBag.Teacher.TeacherId'</h3>
         <h3> Count of Students: @count</h3>
 
     </div>
@@ -38,22 +39,28 @@
 
 
 <br />
-@if (Model.Any())
+@if (Model.Item1.Any())
 {
     <div>
         <table class="table">
             <thead>
                 <tr>
-                    <th>@Html.DisplayNameFor(model => model.StudentName)</th>
-                    <th>@Html.DisplayNameFor(model => model.city.CityName)</th>
-                    <th>@Html.DisplayNameFor(model => model.StudentNumber)</th>
-                    <th>@Html.DisplayNameFor(model => model.StudentPhoneNumber)</th>
-                    <th>@Html.DisplayNameFor(model => model.StudentParentPhoneNumber)</th>
-                    <th>@Html.DisplayNameFor(model => model.StudentGrade)</th>
+                    <th>@Html.DisplayName("StudentName")</th>
+                    <th>@Html.DisplayName("CityName")</th>
+                    <th>@Html.DisplayName("StudentNumber")</th>
+                    <th>@Html.DisplayName("StudentPhoneNumber")</th>
+                    <th>@Html.DisplayName("StudentParentPhoneNumber")</th>
+                    <th>@Html.DisplayName("StudentGrade")</th>
+
+                    @foreach (var item in Model.Item2.OrderBy(e=>e.DateOfAttendeens).Select(e => e.DateOfAttendeens.ToShortDateString()).Distinct().ToList())
+                    {
+
+                    <th>@item</th>
+                    }
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model)
+                @foreach (var item in Model.Item1)
                 {
                     <tr>
                       
@@ -63,6 +70,13 @@
                         <td>@Html.DisplayFor(model => item.StudentPhoneNumber)</td>
                         <td>@Html.DisplayFor(model => item.StudentParentPhoneNumber)</td>
                         <td>@Html.DisplayFor(model => item.StudentGrade)</td>
+                        @foreach (var item1 in Dates)
+                        {
+
+                            <td>@(Model.Item2.Any(e => e.TeacherId == @ViewBag.Teacher.TeacherId && e.DateOfAttendeens == item1 && e.StudentId == item.StudentId) ? "yes" : "-")</td>
+                        }
+                           
+                      
                     </tr>
                 }
             </tbody>
@@ -73,7 +87,7 @@
     </div>
 } 
 
-@if (!Model.Any())
+@if (!Model.Item1.Any())
 {
     <div class="alert alert-warning d-flex align-items-lg-center mt-5 col-12" role="alert">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle me-2" viewBox="0 0 16 16">
@@ -109,27 +123,41 @@
 
                     <input type="submit" value="Add" class="btn btn-primary"  />
 				</div>
-            
-          
         </form>
-@*
+        <br />
+        <br />
 
-<div class="d-flex justify-content-around ">
-<div class="card" style="width: 18rem;">
-<img src="~/teacher-concept-illustration_114360-2166.jpg" />
-  <div class="card-body">
-    <h5 class="card-title">Teachers Portal</h5>
-    <p class="card-text">As a teacher you go here.</p>
-            <a href="#" class="btn btn-primary">go to Teachers</a>
-  </div>
-</div>
-	<div class="card" style="width: 18rem;">
-		<img src="~/istockphoto-1171911961-170667a.jpg" />
-
-    <div class="card-body">
-        <h5 class="card-title">Students Portal</h5>
-            <p class="card-text">As a student you go here.</p>
-            <a asp-action="" class="btn btn-primary">go to Students</a>
+<form method="post" asp-action="Table">
+    
+    
+    <div>
+        <dt class="col-sm-3">
+            @Html.DisplayName("Attend a student")
+        </dt>
+        <dd class="col-sm-3 mt-2">
+            @Html.DropDownList("StudentId", new SelectList(ViewBag.Students, "StudentId", "StudentName"),"", new { @class = "form-control" , @placeholder = "Student's id to attend to his class..."})
+            <input type="date" class="form-control" placeholder="Date Of Attendees..." name="AttendDate" />
+        </dd>
     </div>
-</div>
-</div>*@
+
+
+
+
+
+
+    <div class="d-none">
+        <dt class="col-sm-2 mt-2 ">
+            @Html.DisplayName("Add To Class")
+        </dt>
+        <dd class="col-sm-3">
+            <input name="TeacherId" value="@ViewBag.Teacher.TeacherId" />
+            @Html.TextBox("TeacherId", null, new { @class = "form-control" , @placeholder = "Teacher's id to attend to his class..."})
+        </dd>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Add" class="btn btn-primary" />
+    </div>
+
+
+
+</form>

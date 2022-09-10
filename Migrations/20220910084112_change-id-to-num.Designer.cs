@@ -4,6 +4,7 @@ using ClassManegmentSystem.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ClassManegmentSystem.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220910084112_change-id-to-num")]
+    partial class changeidtonum
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,34 +23,6 @@ namespace ClassManegmentSystem.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("ClassManegmentSystem.Models.Attendees", b =>
-                {
-                    b.Property<int>("AttendeesId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AttendeesId"), 1L, 1);
-
-                    b.Property<string>("ClassNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateOfAttendeens")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TeacherId")
-                        .HasColumnType("int");
-
-                    b.HasKey("AttendeesId");
-
-                    b.HasIndex("StudentId", "TeacherId");
-
-                    b.ToTable("Attendees");
-                });
 
             modelBuilder.Entity("ClassManegmentSystem.Models.City", b =>
                 {
@@ -186,17 +160,6 @@ namespace ClassManegmentSystem.Migrations
                     b.ToTable("Teachers");
                 });
 
-            modelBuilder.Entity("ClassManegmentSystem.Models.Attendees", b =>
-                {
-                    b.HasOne("ClassManegmentSystem.Models.Class", "Class")
-                        .WithMany("Attendees")
-                        .HasForeignKey("StudentId", "TeacherId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Class");
-                });
-
             modelBuilder.Entity("ClassManegmentSystem.Models.Class", b =>
                 {
                     b.HasOne("ClassManegmentSystem.Models.Student", "student")
@@ -230,11 +193,6 @@ namespace ClassManegmentSystem.Migrations
             modelBuilder.Entity("ClassManegmentSystem.Models.City", b =>
                 {
                     b.Navigation("students");
-                });
-
-            modelBuilder.Entity("ClassManegmentSystem.Models.Class", b =>
-                {
-                    b.Navigation("Attendees");
                 });
 
             modelBuilder.Entity("ClassManegmentSystem.Models.Student", b =>

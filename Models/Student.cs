@@ -45,6 +45,7 @@ namespace ClassManegmentSystem.Models
         public City? city { get; set; }
         public ICollection<Teacher>? teachers { get; set; }
         public List<Class>? Classes { get; set; }
+      
 
     }
 }
